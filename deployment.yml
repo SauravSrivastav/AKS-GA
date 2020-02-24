@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: net-app
-        image: ACRURL/myimage:${{ github.sha }}
+        image: ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
         ports:
         - containerPort: 80
       #imagePullSecrets:
