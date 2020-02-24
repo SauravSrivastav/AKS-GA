@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: net-app
-        image: ACRURL/myimage:v-BUILDNUM
+        image: ACRURL/myimage:${{ github.sha }}
         ports:
         - containerPort: 80
       #imagePullSecrets:
