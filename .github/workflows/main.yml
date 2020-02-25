@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - run: 'Copy / '
+      shell: bash
+    - name: Replace vars in k8s yaml
+      run: 
+        echo "Replacing vars in k8s/net-app.yaml"
+
+        sed -i 's/BUILDNUM/$(Build.BuildNumber)/g; s/AKSURL/$(aksurl)/g; s/ACRURL/$(acrurl)/g' k8s/net-app.yaml
     
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
