@@ -57,7 +57,7 @@ jobs:
         manifests: |
           k8s/net-app.yaml
         images: |
-          ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+          ${{ env.REGISTRY_NAME }}.azurecr.io/net-app:${{ github.sha }}
         imagepullsecrets: |
           ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
