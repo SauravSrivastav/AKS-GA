@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: net-app
-        version: v-BUILDNUM
+        version: v-12345
     spec:
       containers:
       - name: net-app
