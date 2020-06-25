@@ -6,19 +6,14 @@ env:
   CLUSTER_NAME: hclcloudnativeaks
   CLUSTER_RESOURCE_GROUP: cloudnative-rg
   NAMESPACE: default
+  acrurl: hclcloudnativeacr.azurecr.io
+  aksurl: 9ed687322dca43e99409.eastus.aksapp.io
   
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - run: 'Copy / '
-      shell: bash
-    - name: Replace vars in k8s yaml
-      run: 
-        echo "Replacing vars in k8s/net-app.yaml"
-
-        sed -i 's/BUILDNUM/$(Build.BuildNumber)/g; s/AKSURL/$(aksurl)/g; s/ACRURL/$(acrurl)/g' k8s/net-app.yaml
     
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
@@ -26,11 +21,15 @@ jobs:
         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    # Container build and push to a Azure Container registry (ACR)
+      
     - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+        docker build . --file **/Dockerfile -t hclcloudnativeacr.azurecr.io/net-app:${{ github.sha }} 
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/net-app:${{ github.sha }}
+    #- run: docker build-push . --file **/Dockerfile hclcloudnativeacr net-app --tags v-${{ env.Build.BuildNumber }},latest
+    - name: Replace vars in k8s yaml
+      run: |
+        echo "Replacing vars in k8s/net-app.yaml"
+        sed -i 's/BUILDNUM/${{ env.Build.BuildNumber }}/g; s/AKSURL/${{ env.aksurl }}/g; s/ACRURL/${{ env.acrurl }}/g' k8s/net-app.yaml
     
     # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
@@ -56,5 +55,9 @@ jobs:
     - uses: azure/k8s-deploy@v1
       with:
         manifests: |
-          deployment.yml
+          k8s/net-app.yaml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
