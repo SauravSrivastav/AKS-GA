@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: net-app
-        image: ACRURL/net-app:v-BUILDNUM
+        image: ACRURL/net-app:v-12345
         ports:
         - containerPort: 80
       #imagePullSecrets:
