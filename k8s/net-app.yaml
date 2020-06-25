@@ -11,11 +11,10 @@ spec:
     metadata:
       labels:
         app: net-app
-        version: v-12345
     spec:
       containers:
       - name: net-app
-        image: ACRURL/net-app:v-12345
+        image: ACRURL/net-app
         ports:
         - containerPort: 80
       #imagePullSecrets:
