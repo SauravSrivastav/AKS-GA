@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
       
     - run: |
-        docker build . --file **/Dockerfile -t hclcloudnativeacr.azurecr.io/net-app:${{ github.sha }} 
+        docker build . -t hclcloudnativeacr.azurecr.io/net-app:${{ github.sha }} 
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/net-app:${{ github.sha }}
     #- run: docker build-push . --file **/Dockerfile hclcloudnativeacr net-app --tags v-${{ env.Build.BuildNumber }},latest
     - name: Replace vars in k8s yaml
