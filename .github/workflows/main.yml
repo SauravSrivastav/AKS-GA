@@ -7,7 +7,7 @@ env:
   CLUSTER_RESOURCE_GROUP: cloudnative-rg
   NAMESPACE: default
   acrurl: hclcloudnativeacr.azurecr.io
-  aksurl: 9ed687322dca43e99409.eastus.aksapp.io
+  aksurl: 7b58ae97628c49319284.eastus.aksapp.io
   
 jobs:
   build:
