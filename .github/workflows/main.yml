@@ -2,11 +2,11 @@ on: [push]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  REGISTRY_NAME: hclcloudnativeacr
-  CLUSTER_NAME: hclcloudnativeaks
-  CLUSTER_RESOURCE_GROUP: cloudnative-rg
+  REGISTRY_NAME: acrJenkinsAzure
+  CLUSTER_NAME: aksJenkinsAzure
+  CLUSTER_RESOURCE_GROUP: rgJenkinsAzure
   NAMESPACE: default
-  acrurl: hclcloudnativeacr.azurecr.io
+  acrurl: acrjenkinsazure.azurecr.io
 
   
 jobs:
