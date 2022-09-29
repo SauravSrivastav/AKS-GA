@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: net-app
-        image: hclcloudnativeacr.azurecr.io/net-app
+        image: sauravsrivastav/web:v1
         ports:
         - containerPort: 80
       #imagePullSecrets:
